@@ -1,0 +1,29 @@
+# Nama workflow Anda, akan muncul di tab "Actions" di GitHub
+name: Belajar GitHub Actions
+
+# Menentukan event yang akan memicu workflow ini
+# Dalam kasus ini, workflow akan berjalan setiap kali ada 'push'
+on: [push]
+
+# Mendefinisikan satu atau lebih pekerjaan (jobs) yang akan dijalankan
+jobs:
+  # Nama job (bisa apa saja)
+  build:
+    # Menentukan sistem operasi untuk runner
+    runs-on: ubuntu-latest
+
+    # Langkah-langkah yang akan dieksekusi dalam job ini
+    steps:
+      # Step 1: Menggunakan action 'checkout' untuk mengunduh kode repositori Anda ke runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Menjalankan perintah shell sederhana
+      - name: Run a one-line script
+        run: echo "Hello, GitHub Actions!"
+
+      # Step 3: Menjalankan perintah shell multi-baris
+      - name: Run a multi-line script
+        run: |
+          echo "Ini adalah baris pertama."
+          echo "Ini adalah baris kedua."
