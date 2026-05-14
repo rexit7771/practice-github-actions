@@ -35,6 +35,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. (Opsional) Menjalankan tes. Kita akan tambahkan ini nanti.
-      # - name: Run tests
-      #   run: npm test
+      # 4. Menjalankan tes. Kita akan tambahkan ini nanti.
+      - name: Run tests
+        run: npm test

@@ -12,7 +12,11 @@ app.get('/api/greeting', (req, res) => {
     res.json({ message: 'Halo dari API!' });
 });
 
-// Mulai server dan dengarkan di port yang ditentukan
-app.listen(port, () => {
-    console.log(`Server berjalan di port ${port}`);
-});
+// Hanya jalankan server jika file ini dijalankan secara langsung (bukan diimpor)
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Server berjalan di http://localhost:${port}`);
+    });
+}
+
+module.exports = app;
