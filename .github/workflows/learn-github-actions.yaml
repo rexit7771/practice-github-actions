@@ -1,5 +1,5 @@
 # Nama workflow Anda, akan muncul di tab "Actions" di GitHub
-name: Belajar GitHub Actions
+name: Belajar GitHub Actions CI untuk Node js
 
 # Menentukan event yang akan memicu workflow ini
 # Dalam kasus ini, workflow akan berjalan setiap kali ada 'push'
@@ -12,18 +12,29 @@ jobs:
     # Menentukan sistem operasi untuk runner
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+
     # Langkah-langkah yang akan dieksekusi dalam job ini
     steps:
       # Step 1: Menggunakan action 'checkout' untuk mengunduh kode repositori Anda ke runner
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Menjalankan perintah shell sederhana
-      - name: Run a one-line script
-        run: echo "Hello, GitHub Actions!"
+      # 2. Menyiapkan Node.js sesuai versi dari matrix
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          # Menggunakan cache untuk mempercepat instalasi dependensi
+          cache: 'npm'
 
-      # Step 3: Menjalankan perintah shell multi-baris
-      - name: Run a multi-line script
-        run: |
-          echo "Ini adalah baris pertama."
-          echo "Ini adalah baris kedua."
+      # 3. Menginstal dependensi proyek
+      # 'npm ci' lebih cepat dan aman untuk lingkungan CI daripada 'npm install'
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. (Opsional) Menjalankan tes. Kita akan tambahkan ini nanti.
+      # - name: Run tests
+      #   run: npm test
